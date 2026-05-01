@@ -43,11 +43,15 @@ jobs:
                 apt-get update
                 apt-get install -y autoconf autotools-dev build-essential bzip2 ccache cmake curl gcc git libc6 libc6-dbg libc6-dev libgtest-dev libtool make parallel pkg-config time wget openjdk-11-jdk openjdk-17-jdk python2 python3-dev python3-setuptools python3-pip python3-venv unzip
               fi
-              curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v3.17.3/protoc-3.17.3-linux-x86_64.zip
-              unzip -o protoc-3.17.3-linux-x86_64.zip -d "$HOME/.local"
-              cp "$HOME/.local/bin/protoc" src/
+              ./autogen.sh
+              ./configure --disable-shared
+              make -j"$(nproc)" protoc
+              cp src/protoc /usr/local/bin/protoc
+              protoc --version
+
               cd java
               mvn --version
+              mvn --batch-mode -e -Dhttps.protocols=TLSv1.2 clean generate-sources generate-test-sources
               mvn --batch-mode -e -Dhttps.protocols=TLSv1.2 clean package
             '
 
