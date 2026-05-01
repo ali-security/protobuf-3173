@@ -10,6 +10,10 @@
   Java
   * Fixed parser to check that we are at a proper limit when a sub-message has
     finished parsing.
+  * Fix TextFormat parser to build up recurring (but supposedly not repeated)
+    sub-messages directly from text rather than building a new sub-message and
+    merging the fully formed message into the existing field.
+  * Move proto wireformat parsing functionality from the private parsing constructor to the Builder class (CVE-2022-3510 tracking backport note).
 
 2021-05-25 version 3.17.2 (C++/Java/Python/PHP/Objective-C/C#/Ruby/JavaScript)
   Kotlin
