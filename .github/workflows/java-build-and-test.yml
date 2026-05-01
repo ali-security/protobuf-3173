@@ -45,7 +45,7 @@ jobs:
               fi
               ./autogen.sh
               ./configure --disable-shared
-              make -j"$(nproc)" protoc
+              make -C src -j"$(nproc)" protoc
               cp src/protoc /usr/local/bin/protoc
               protoc --version
 
